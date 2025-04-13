@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 const props = defineProps<{
   id: number
   title: string
-  price: string
+  price: number
   description: string
   cataegory: string
   image: string
@@ -14,14 +14,15 @@ const props = defineProps<{
 }>()
 </script>
 <template>
-  <div class="border-2 p-4 bg-blue-200 rounded-2xl">
+  <div class="border-2 rounded-2xl flex flex-col justify-between">
     <div class="w-[50%] m-auto">
       <img :src="props.image" alt="Item image" />
     </div>
-
-    <div class="text-lg font-extrabold">{{ props.title }}</div>
-    <div>{{ props.cataegory }}</div>
-    <div>{{ props.description }}</div>
+   <div class="bg-amber-50 p-4">
+    <div class="text-2xl font-extrabold text-center">{{ props.title }}</div>
+    <div class="text-lg font-bold text-left mt-2">{{ props.cataegory }}</div>
+    <div class="text-justify text-xl mt-2">{{ props.description }}</div>
     <div>{{ props.price }}</div>
+    </div>
   </div>
 </template>

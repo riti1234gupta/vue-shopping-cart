@@ -1,11 +1,33 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
+// Define your state type
+interface Product {
+  id: number
+  title: string
+  price: number
+  description: string
+  category: string
+  image: string
+  rating: {
+    rate: number
+    count: number
+  }
+}
+
+interface ProductState {
+  products: Product[]
+  loading: boolean
+  error: string | null
+  searchQuery: string
+}
+
 export const useProductStore = defineStore('product', {
-  state: () => ({
-    products: [] as any[],
+  state: (): ProductState => ({
+    products: [],
     loading: false,
-    error: null as string | null,
+    error: null,
+    searchQuery: '',
   }),
   actions: {
     async fetchProducts() {
@@ -19,6 +41,13 @@ export const useProductStore = defineStore('product', {
       } finally {
         this.loading = false
       }
+    },
+  },
+  getters: {
+    filteredProducts: (state): Product[] => {
+      return state.products.filter((product) =>
+        product.title.toLowerCase().includes(state.searchQuery.toLowerCase()),
+      )
     },
   },
 })

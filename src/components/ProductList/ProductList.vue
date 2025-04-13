@@ -8,7 +8,7 @@ const productStore = useProductStore()
 
   <div v-else class="grid grid-cols-4 gap-6">
     <ProductCard
-      v-for="product in productStore.products"
+      v-for="product in productStore.filteredProducts"
       :key="product.id"
       :id="product.id"
       :title="product.title"
