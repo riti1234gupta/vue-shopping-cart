@@ -1,0 +1,7 @@
+@import './base.css';
+@import 'tailwindcss';
+
+@theme {
+  --color-navbar: #ebe0cc;
+  --color-searchBtnColor: #198754;
+}
