@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { defineProps } from 'vue'
+import Rating from 'primevue/rating';
 const props = defineProps<{
   id: number
   title: string
@@ -23,6 +24,9 @@ const props = defineProps<{
     <div class="text-lg font-bold text-left mt-2">{{ props.cataegory }}</div>
     <div class="text-justify text-xl mt-2">{{ props.description }}</div>
     <div>{{ props.price }}</div>
+     <div class="card flex justify-center">
+        <Rating v-model="props.rating.rate" />
+    </div>
     </div>
   </div>
 </template>

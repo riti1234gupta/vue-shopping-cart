@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-// Define your state type
 interface Product {
   id: number
   title: string
@@ -20,6 +19,8 @@ interface ProductState {
   loading: boolean
   error: string | null
   searchQuery: string
+  sortOrder: 'Asc' | 'Desc' | '' // Add this!
+  rating: number
 }
 
 export const useProductStore = defineStore('product', {
@@ -28,7 +29,10 @@ export const useProductStore = defineStore('product', {
     loading: false,
     error: null,
     searchQuery: '',
+    sortOrder: '', // Default: no sorting
+    rating: 0,
   }),
+
   actions: {
     async fetchProducts() {
       this.loading = true
@@ -42,12 +46,35 @@ export const useProductStore = defineStore('product', {
         this.loading = false
       }
     },
+    setSortOrder(order: 'Asc' | 'Desc' | '') {
+      this.sortOrder = order
+    },
+    setRating(rating: number) {
+      this.rating = rating
+    },
   },
+
   getters: {
     filteredProducts: (state): Product[] => {
-      return state.products.filter((product) =>
-        product.title.toLowerCase().includes(state.searchQuery.toLowerCase()),
-      )
+      let filtered = [...state.products]
+
+      if (state.searchQuery.trim()) {
+        filtered = filtered.filter((product) =>
+          product.title.toLowerCase().includes(state.searchQuery.toLowerCase()),
+        )
+      }
+
+      if (state.rating > 0) {
+        filtered = filtered.filter((product) => product.rating.rate >= state.rating)
+      }
+
+      if (state.sortOrder === 'Asc') {
+        filtered = filtered.sort((a, b) => a.price - b.price)
+      } else if (state.sortOrder === 'Desc') {
+        filtered = filtered.sort((a, b) => b.price - a.price)
+      }
+
+      return filtered
     },
   },
 })
