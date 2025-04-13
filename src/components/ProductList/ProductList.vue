@@ -6,7 +6,7 @@ const productStore = useProductStore()
 <template>
   <div v-if="productStore.loading" class="text-center py-4">Loading Shopping items...</div>
 
-  <div v-else class="grid grid-cols-4 gap-6">
+  <div v-else class="grid grid-cols-2 gap-6">
     <ProductCard
       v-for="product in productStore.filteredProducts"
       :key="product.id"
