@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { useProductStore } from '@/stores/productStore';
-const productStore = useProductStore()
+import { useCartStore } from '@/stores/cartStore';
+const productStore = useProductStore();
+const cartStore = useCartStore();
 const props = defineProps<{
      showSideBar: boolean;
  toggleShowSidebar: ()=>void;
@@ -16,7 +18,7 @@ const props = defineProps<{
         placeholder="Search a product"
         class="bg-white w-[30%] rounded-xl p-3.5"
       />
-      <div class="ml-4 bg-searchBtnColor p-3.5 text-white rounded-xl">View cart</div>
+      <div class="ml-4 bg-searchBtnColor p-3.5 text-white rounded-xl">View cart {{ cartStore.products.length }}</div>
     </div>
   </div>
   <div class="bg-black flex flex-row items-center py-4 ">
